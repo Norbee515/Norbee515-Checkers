@@ -1,0 +1,63 @@
+﻿<Window x:Class="ProjectCheck.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjectCheck.VM"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="470" Width="700">
+
+    <Window.DataContext>
+        <local:Game/>
+    </Window.DataContext>
+    <Grid>
+        <Menu Height="17" Margin="0,0,0,0" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New Game"  Click="NewGame_Click"/>
+                <MenuItem Header="Open Game" Click="OpenGame_Click"/>
+                <MenuItem Header="Save Game" Click="SaveGame_Click"/>
+                <MenuItem Header="Statistics" Click="Statistics_Click"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Click="About_Click"/>
+            </MenuItem>
+        </Menu>
+        <ItemsControl Name="grid" ItemsSource="{Binding Gameboard}" VerticalAlignment="Center" Margin="0,20,0,0" Height="400" Width="400" >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding }">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="50" Height="50" BorderThickness="2" BorderBrush="#000000">
+                                    <Button Command="{Binding ClickCommand}" CommandParameter="{Binding SimpleCell}">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Image Source="{Binding SimpleCell.CellImage}" Stretch="Fill" />
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Label Content="Curent Player" HorizontalAlignment="Left" Margin="35,138,0,0" VerticalAlignment="Top" Background="Beige" />
+        <Label Content="{Binding Player.Name}" HorizontalAlignment="Left" Margin="46,193,0,0" VerticalAlignment="Top" Background="Beige" Width="59" />
+        <Label Content="Multi Jump" HorizontalAlignment="Left" Margin="36,283,0,0" VerticalAlignment="Top" Background="Beige" />
+        <CheckBox  HorizontalAlignment="Left" Margin="109,287,0,0" VerticalAlignment="Top" Background="Beige" IsChecked="{Binding MultipleMoves.MMove}" IsEnabled="{Binding MultipleMoves.Started}" />
+
+    </Grid>
+    
+    <Window.Background>
+        <ImageBrush ImageSource="/ProjectCheck;component/Images/ProjectCheck_BackG.jpg">
+        </ImageBrush>
+    </Window.Background>
+    
+</Window>
